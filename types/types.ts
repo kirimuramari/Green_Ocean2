@@ -14,6 +14,14 @@ export interface SetColorItem {
   フリガナ: string;
   値段: number;
 }
+
+export interface Purchased {
+      番号: number;
+      コード: number;
+      商品名: string;
+      フリガナ: string;
+      セット名: string;
+}
 export interface Notice {
   id: number;
   title: string;
