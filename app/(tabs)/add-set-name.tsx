@@ -1,11 +1,8 @@
-import { supabase } from "@/lib/supabaseClient";
 import { Snackbar } from "react-native-paper";
 import { BackButton } from "@/components/BackButton";
-import { SnackbarType, getSnackbarStyle } from "@/theme/snackbarStyles";
+import {  getSnackbarStyle } from "@/theme/snackbarStyles";
 import { formStyles } from "@/theme/formStyles";
-import { SetColorItem } from "@/types/types";
 import { router } from "expo-router";
-import { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -13,65 +10,25 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { useAddSetNameList } from "@/hooks/AddSetName/useAddSetNameList";
 
 const AddSetName = () => {
-  const [setName, setSetName] = useState("");
-  const [furigana, setFurigana] = useState("");
-  const [price, setPrice] = useState<string>("");
-  const [lastNumber, setLastNumber] = useState<number>(0);
-  const [snackbarVisible, setSnackbarVisible] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState("");
-  const [snackbarType, setSnackbarType] = useState<SnackbarType>("success");
+ const {
+  setName,
+  setSetName,
+  furigana,
+        setFurigana,
+        price,
+        setPrice,
 
-  const showSnackbar = (msg: string, type: SnackbarType = "success") => {
-    setSnackbarMessage(msg);
-    setSnackbarType(type);
-    setSnackbarVisible(true);
-  };
-  // 最大番号取得
-  useEffect(() => {
-    const fetchLastNumber = async () => {
-      const { data, error } = await supabase
-        .from("GreenOcean_SetColor")
-        .select("番号")
+        snackbarVisible,
+        snackbarMessage,
+        snackbarType,
+        setSnackbarVisible,
 
-        .order("番号", { ascending: false })
-        .limit(1);
-
-      if (error) {
-        return;
-      }
-      const last: number =
-        (data?.[0] as unknown as SetColorItem)?.["番号"] ?? 0;
-      setLastNumber(last);
-    };
-    fetchLastNumber();
-  }, []);
-
-  const handleRegister = async () => {
-    if (!setName.trim() || !furigana.trim()) {
-      showSnackbar("セット名とフリガナは必須項目です", "error");
-      return;
-    }
-    const newItem: Omit<SetColorItem, "番号" | "コード"> = {
-      セット名: setName,
-      フリガナ: furigana,
-      値段: price.trim() ? Number(price) : 0,
-    };
-
-    const { error } = await supabase
-      .from("GreenOcean_SetColor")
-      .insert(newItem);
-    if (error) {
-      console.error("登録エラー:", error.message);
-      showSnackbar("セット名の登録に失敗しました", "error");
-    } else {
-      showSnackbar("セット名が登録されました", "success");
-      setSetName("");
-      setFurigana("");
-      setPrice("");
-    }
-  };
+        handleRegister,
+ } = useAddSetNameList();
+  
 
   return (
     <View style={(styles.container, formStyles.container)}>
