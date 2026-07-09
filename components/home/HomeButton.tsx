@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Link } from "expo-router";
-import { TouchableOpacity, Text,StyleSheet } from "react-native";
+import { Text,StyleSheet } from "react-native";
 import { HomeMenu } from "./HomeMenu";
 
 type Props = {
@@ -10,20 +10,20 @@ type Props = {
 
 export function HomeButton({menu,isDesktop}:Props) {
     return (
-        <Link href={menu.href} asChild>
-            <TouchableOpacity
-                style={[
-                    styles.button,
-                    isDesktop && styles.buttonDesktop,
-                ]}
-                >
-                    <Ionicons
-                    name={menu.icon}
-                    size={isDesktop ? 48 : 32}
-                    color="#f7f9ff"
-                    />
-                    <Text style={styles.buttonText}>{menu.title}</Text>
-                </TouchableOpacity>
+        <Link href={menu.href}
+            style={[
+                styles.button,
+                isDesktop && styles.buttonDesktop,
+            ]}
+            >
+        <Ionicons
+            name={menu.icon}
+            size={isDesktop ? 48 : 32}
+            color="#f7f9ff"
+        />
+        <Text style={styles.buttonText}>
+            {menu.title}
+            </Text>
         </Link>
     );
 }

@@ -21,10 +21,11 @@ export function HomeSection({
         <>
         <Text style={styles.title}>{title}</Text>
         <View
-            style={[
-                styles.grid,
-                isDesktop && styles.gridDesktop,
-            ]}
+            style={
+                isDesktop
+                ? [styles.grid, styles.gridDesktop]
+                : styles.grid
+            }
             >
                 {menus.map((menu) => (
                     <HomeButton
