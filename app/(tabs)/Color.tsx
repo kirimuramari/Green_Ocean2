@@ -1,10 +1,7 @@
 import ColorSearchPanel from "@/components/color/ColorSearchPanel";
 import { useColorList } from "@/hooks/color/useColorList";
 import { useColorSearch } from "@/hooks/color/useColorSearch";
-import { useColorActions } from "@/hooks/color/useColorActions";
 import { BackButton } from "@/components/BackButton";
-import { AppSnackbar } from "@/components/common/AppSnackbar";
-import { DeleteConfirmDialog } from "@/components/common/DeleteConfirmDialog";
 import { ListStatus } from "@/components/ListStatus";
 import { TableView, } from "@/components/TableView";
 import { SortKey } from "@/features/sort/sortTypes";
@@ -53,10 +50,7 @@ export default function ColorScreen() {
     sortKey,
   });
 
-const actions = useColorActions({
-  updateItem,
-  removeItem,
-});
+
 
 
   //ＰＣかスマホ判定
@@ -76,13 +70,6 @@ const actions = useColorActions({
 
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-      {/* ロード中の表示 */}
-      <ListStatus
-        loading={loading}
-        error={error}
-        hasData={colors.length > 0}
-        emptyMessage="該当する商品がありません"
-      />
       <View
         style={[
           { width: "100%", backgroundColor: "#fff" },
@@ -117,7 +104,7 @@ const actions = useColorActions({
         sort={{
           value: sortKey,
           onChange: setSortKey,
-     }}
+        }}
      />
      </View>
 
@@ -129,11 +116,14 @@ const actions = useColorActions({
               isDesktop={isDesktop}
               rowKey={(item) => item.コード}
             />
-            <DeleteConfirmDialog
-              visible={!!actions.deleteTarget}
-              onCancel={actions.handleDeleteCancel}
-              onConfirm={actions.handleDeleteConfirm}
-            />
+        {/* ロード中の表示 */}
+        <ListStatus
+          loading={loading}
+          error={error}
+          hasData={colors.length > 0}
+          emptyMessage="該当する商品がありません"
+        />
+
           <View style={styles.pagination}>
             <Button title="前へ" onPress={prevPage} disabled={page === 0} />
             <Text>ページ {page + 1}</Text>
@@ -142,11 +132,6 @@ const actions = useColorActions({
         </View>
       </View>
 
-      <AppSnackbar
-        visible={actions.snackbarVisible}
-        message={actions.snackbarMessage}
-        onDismiss={actions.hideSnackbar}
-      />
     </ScrollView>
   );
 }
