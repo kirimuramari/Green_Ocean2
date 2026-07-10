@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Link } from "expo-router";
-import { Text,StyleSheet } from "react-native";
+import { Text,StyleSheet,View } from "react-native";
 import { HomeMenu } from "./HomeMenu";
 
 type Props = {
@@ -16,6 +16,7 @@ export function HomeButton({menu,isDesktop}:Props) {
                 isDesktop && styles.buttonDesktop,
             ]}
             >
+<View style={styles.content}>
         <Ionicons
             name={menu.icon}
             size={isDesktop ? 48 : 32}
@@ -24,11 +25,22 @@ export function HomeButton({menu,isDesktop}:Props) {
         <Text style={styles.buttonText}>
             {menu.title}
             </Text>
+
+</View>
         </Link>
     );
 }
 
 const styles = StyleSheet.create({
+    content:{
+        flex:1,
+        width:'100%',
+        justifyContent:'center',
+        alignItems:'center',
+        flexDirection:'column',
+        marginLeft:'auto',
+        marginRight:'auto',
+    },
 button: {
     backgroundColor: '#a2d2ff',
     width: 102,
@@ -37,6 +49,7 @@ button: {
     margin: 3.3,
     justifyContent: 'center',
     alignItems: 'center',
+    flexDirection:'column'
   },
   buttonDesktop: {
     width: 150,
@@ -47,5 +60,6 @@ button: {
     fontSize: 14,
     marginTop: 6,
     textAlign: 'center',
+    width:'100%',
   },
 });
