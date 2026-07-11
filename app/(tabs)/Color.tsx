@@ -42,8 +42,7 @@ export default function ColorScreen() {
         nextPage,
         prevPage,
 
-        updateItem,
-  removeItem,
+    
   } = useColorList({
     searchKeyword,
     searchSetName,
