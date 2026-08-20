@@ -7,6 +7,7 @@ export interface Color {
   値段: number;
   セット名: string;
   購入済み: boolean;
+  種類:string;
 }
 export interface SetColorItem {
   番号: number;
@@ -21,12 +22,9 @@ export interface Purchased {
       商品名: string;
       フリガナ: string;
       セット名: string;
+      種類:string;
 }
-export interface Notice {
-  id: number;
-  title: string;
-  created_at: string;
-}
+
 //DB未完成型のデータ
 export interface Colorform {
   番号: number | null,

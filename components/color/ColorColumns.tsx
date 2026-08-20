@@ -57,6 +57,16 @@ export function createColorColumns({
           key:"セット名",
           header: "セット名",
            width: isDesktop ? "30%" : "34%" },
+           {
+            id:"種類",
+            key:"種類",
+            header:"種類",
+            width:isDesktop ? "8%" : "10%",
+            render:(item:Color) => (
+              <Text style={{textAlign:"left"}}>{item.種類}</Text>
+            )
+
+           },
    
       ];
 }
