@@ -45,7 +45,6 @@ export const desktopTables = StyleSheet.create({
     backgroundColor: "#fff",
     borderRadius: 5,
     boxShadow: "0 1px 3px 0 rgba(0,0,0,0.1)",
-    overflow: "hidden",
   },
   headerRow: {
     paddingHorizontal: 10,

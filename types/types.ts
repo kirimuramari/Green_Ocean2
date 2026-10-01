@@ -8,6 +8,7 @@ export interface Color {
   セット名: string;
   購入済み: boolean;
   種類:string;
+  画像:string | null;
 }
 export interface SetColorItem {
   番号: number;
