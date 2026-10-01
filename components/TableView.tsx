@@ -46,6 +46,10 @@ export function TableView<T extends object>
           key={rowKey(item, index)}
           style={[
             tables.headerRow,
+            isDesktop && {
+              position:"relative",
+              zIndex:data.length - index,
+            },
             { backgroundColor: index % 2 === 0 ? "#fff" : "#eee" },
           ]}
         >
@@ -56,6 +60,11 @@ export function TableView<T extends object>
                 { width: col.width },
                 tables.dataCell,
                 isDesktop && desktopTables.dataCell,
+                isDesktop &&
+                col.id === "商品名" && {
+                  position:"relative",
+                  zIndex: 1000,
+                },
               ]}
             >
               {col.render ? (
