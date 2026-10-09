@@ -9,11 +9,14 @@ export type ColorSearchPanelProps = {
         keyword:string;
         selectedSetName:string;
         setNameList:string[];
+        selectedType: string;
+        typeList: string[];
     };
 
     actions:{
         onKeywordChange:(text:string) => void;
         onSetNameChange:(value:string) => void;
+        onTypeChange: (value: string) => void;
         onSearch: () => void;
     };
     sort:{
