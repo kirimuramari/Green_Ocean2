@@ -9,11 +9,13 @@ type Props = {
     searchKeyword: string;
     searchSetName: string;
     sortKey: SortKey;
+    searchType:string;
 };
 export function useColorList({
     searchKeyword,
     searchSetName,
     sortKey,
+    searchType,
 }: Props) {
     
     const [colors, setColors] = useState<Color[]>([]);
@@ -60,6 +62,10 @@ export function useColorList({
         if (searchSetName) {
           query = query.eq("セット名", searchSetName);
         }
+         // 種類検索
+    if (searchType) {
+      query = query.ilike("種類",`%${searchType}%`);
+    }
         switch (sortKey) {
           case "numberAsc":
             query = query.order("番号");
@@ -89,7 +95,7 @@ export function useColorList({
         }
     
         setLoading(false);
-      }, [page, searchKeyword, searchSetName, sortKey]);
+      }, [page, searchKeyword, searchSetName,searchType, sortKey]);
     
       useEffect(() => {
         fetchData();
@@ -97,7 +103,7 @@ export function useColorList({
 
       useEffect(() => {
         setPage(0);
-      },[searchKeyword,searchSetName]);
+      },[searchKeyword,searchSetName,searchType]);
     
       const nextPage = () => {
         if (hasMore) {
@@ -127,6 +133,8 @@ export function useColorList({
         prev.filter((item) => item.コード !== code),
         );
     };
+
+   
     return {
         colors,
         loading,
