@@ -15,6 +15,7 @@ import {
   Text,
   View,
 } from "react-native";
+import { colorTypes } from "@/types/colorTypes";
 import { createColorColumns } from "@/components/color/ColorColumns";
 
 export default function ColorScreen() {
@@ -24,11 +25,14 @@ export default function ColorScreen() {
   const {
           searchKeywordInput,
           selectedSetName,
+          selectedType,
           searchOpen,
           searchKeyword,
           searchSetName,
+          searchType,
           handleKeywordChange,
           handleSetNameChange,
+          handleTypeChange,
           applySearch,
           toggleSearch,
     } = useColorSearch();
@@ -46,6 +50,7 @@ export default function ColorScreen() {
   } = useColorList({
     searchKeyword,
     searchSetName,
+    searchType,
     sortKey,
   });
 
@@ -94,11 +99,14 @@ export default function ColorScreen() {
           keyword: searchKeywordInput,
           selectedSetName,
           setNameList,
+          selectedType,
+          typeList:[...colorTypes],
         }}
         actions={{
           onKeywordChange: handleKeywordChange,
           onSetNameChange: handleSetNameChange,
           onSearch: handleSearch,
+          onTypeChange:handleTypeChange,
         }}
         sort={{
           value: sortKey,

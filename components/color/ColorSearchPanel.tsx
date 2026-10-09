@@ -34,7 +34,7 @@ export default function ColorSearchPanel({
            value={search.keyword}
            onChangeText={actions.onKeywordChange}
          />
-         <Text style={styles.label}>セット名でフィルター:</Text>
+         <Text style={styles.label}>セット名でフィルター</Text>
          <Picker
            selectedValue={search.selectedSetName}
            onValueChange={actions.onSetNameChange}
@@ -48,6 +48,24 @@ export default function ColorSearchPanel({
              <Picker.Item key={name} label={name} value={name} />
            ))}
          </Picker>
+            <Text style={styles.label}>種類でフィルター</Text>
+            <Picker
+            selectedValue={search.selectedType}
+            onValueChange={actions.onTypeChange}
+            style={[
+              formStyles.picker,
+              isDesktop && desktopFormStyles.picker,
+            ]}
+            >
+              <Picker.Item label="すべて" value="" />
+              {search.typeList.map((type) => (
+                <Picker.Item
+                key={type}
+                label={type}
+                value={type}
+                />
+              ))}
+            </Picker>
          <TouchableOpacity
            onPress={actions.onSearch}
            style={[
