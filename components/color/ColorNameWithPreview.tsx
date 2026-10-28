@@ -1,84 +1,82 @@
 import { Color } from "@/types/types";
-import { Image, Pressable,StyleSheet,Text,View } from "react-native";
-import { useState } from "react";
+import { Pressable,StyleSheet,Text,View } from "react-native";
+import { useRef} from "react";
+
+type PreviewInfo = {
+    imageUrl: string;
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+};
 
 type Props = {
     item:Color;
     isDesktop:boolean;
+    onPreviewShow:(info:PreviewInfo) => void;
+    onPreviewHide: () => void;
 };
 
 export function ColorNameWithPreview({
     item,
     isDesktop,
+    onPreviewShow,
+    onPreviewHide,
 }:Props) {
-    const [isHovered,setISHovered] = useState(false);
-    const [imageError, setImageError] = useState(false);
-
+    const nameRef = useRef<View>(null);
     const imageUrl = item.画像;
+
+
+    const handleHoverIn = () => {
+        if (!imageUrl) return;
+        nameRef.current?.measureInWindow((x, y, width, height) => {
+            onPreviewShow({
+                imageUrl,
+                x,
+                y,
+                width,
+                height,
+            });
+        });
+    };
+
+    // const handleHoverOut = () => {
+     
+    //     setIsHovered(false);
+    // };
+
 
     if (!isDesktop || !imageUrl) {
         return <Text>{item.商品名}</Text>;
     }
     return (
-        <View style={[
-            styles.container,
-            isHovered && styles.hoveredContainer,
-        ]}
+        <View ref={nameRef} style={styles.container}
         >
             <Pressable
-                onHoverIn={() => setISHovered(true)}
-                onHoverOut={() => setISHovered(false)}
+            onHoverIn={handleHoverIn}
+            onHoverOut={onPreviewHide}
                 style={styles.nameButton}
                 >
                     <Text style={styles.productName}>
                         {item.商品名}
                     </Text>
-                </Pressable>
-                {isHovered && !imageError && (
-                    <View style={styles.preview}>
-                        <Image
-                        source={{uri:imageUrl}}
-                        resizeMode="contain"
-                        onError={() => setImageError(true)}
-                        style={styles.Image}
-                        />
-                    </View>
-                )}
+                    </Pressable>
+
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    container:{
-        position:"relative",
-        alignSelf:"flex-start",
+    container: {
+  
+        alignSelf: "flex-start",
     },
-    hoveredContainer:{
-        zIndex:1000,
-    },
+
     nameButton:{
         paddingVertical:2,
     },
     productName:{
         color:"#1769aa",
         textDecorationLine:"underline",
-    },
-    preview:{
-        position:"absolute",
-        top:"100%",
-        left:0,
-        width:220,
-        height:220,
-        backgroundColor:"#fff",
-        borderWidth:1,
-        borderColor:"#ddd",
-        borderRadius:6,
-        padding:8,
-        zIndex:1000,
-        elevation:8,
-    },
-    Image:{
-        width:"100%",
-        height:"100%",
     },
 });

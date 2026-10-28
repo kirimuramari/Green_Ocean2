@@ -9,7 +9,11 @@ export type Column<T extends object> = {
   key?:Extract<keyof T, string | number>;
   header: string;
   width: DimensionValue;
-  render?: (item: T) => React.ReactNode;
+  render?: (
+    item: T,
+    index:number,
+    isLastRow:boolean
+  ) => React.ReactNode;
 };
 
 type Props<T extends object> = {
@@ -68,7 +72,7 @@ export function TableView<T extends object>
               ]}
             >
               {col.render ? (
-                col.render(item)
+                col.render(item,index,index === data.length -1)
               ) : col.key ? (
                 <Text>{String(item[col.key as keyof T] ?? "")}</Text>
               ): null}
