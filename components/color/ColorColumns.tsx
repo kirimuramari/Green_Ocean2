@@ -1,19 +1,29 @@
 import { Color } from "@/types/types";
 import { Column } from "../TableView";
-import {  Text } from "react-native";
+import { Text } from "react-native";
 import { ColorNameWithPreview } from "@/components/color/ColorNameWithPreview";
 
-type CreateColorColumnsProp ={
-  isDesktop:boolean
-  
+type PreviewInfo = {
+  imageUrl:string;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+};
+
+type CreateColorColumnsProp = {
+  isDesktop: boolean;
+  onPreviewShow: (info: PreviewInfo) => void;
+  onPreviewHide: () => void;
 };
 
 export function createColorColumns({
     isDesktop,
+    onPreviewShow,
+    onPreviewHide,
+}: CreateColorColumnsProp): Column<Color>[] {
 
-}: CreateColorColumnsProp):Column<Color>[] {
-
-     return [
+ return [
      {
           id: "番号",
           key:"番号",
@@ -28,10 +38,16 @@ export function createColorColumns({
           key:"商品名",
          header: "商品名",
          width: isDesktop ? "14%" : "18%",
-         render:(item:Color) => (
+         render:(
+          item:Color,
+          index:number,
+          isLastRow:boolean
+        ) => (
           <ColorNameWithPreview
           item={item}
           isDesktop={isDesktop}
+          onPreviewShow={onPreviewShow}
+          onPreviewHide={onPreviewHide}
          />
         ),
          },
